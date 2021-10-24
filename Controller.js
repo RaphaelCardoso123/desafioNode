@@ -17,8 +17,9 @@ let itemcompra = models.ItemCompra;
 let produto = models.Produto;
 
 
+
 app.get('/', function(req, res){
-    res.send('Ola, mundo deu certo!')
+    res.send('Ola mundo, deu certo!')
 });
 
 
@@ -206,7 +207,6 @@ app.put('/cliente/:id/pedido', async(req, res)=>{
               message: "Cliente nao existe."
           });
       };
-      
       await pedido.update(ped,{
           where: sequelize.and(
               {ClienteId: req.params.id},
@@ -272,12 +272,12 @@ app.put('/pedidos/:id/editaritem', async(req, res)=>{
 });
 
 
-
+//Compra
 app.post('/compra', async(req, res)=>{
     await compra.create(
         req.body
     );
-    res.send("Compra inserida com sucesso")
+    res.send("Compra inserida com sucesso!")
 });
 
 
@@ -286,20 +286,20 @@ app.put('/atualizarcompra/:id', async(req,res)=>{
     if(!await compra.findByPk(req.params.id)){
         return res.status(400).json({
             error: true,
-            message: "Nao foi possivel identificar compra"
+            message: "Nao foi possivel identificar compra."
         });
     };
     await compra.update(req.body,{
         where: {id: req.params.id}
     }).then(compra=>{
         return res.json({
-            message: "Compra atualizada com sucesso",
+            message: "Compra atualizada com sucesso!",
             compra
         });
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro compra"
+            message: "Problemas com registro compra."
         });
     });
 });
@@ -310,25 +310,25 @@ app.get('/excluircompra/:id', async(req,res)=>{
     if(!await compra.findByPk(req.params.id,)){
         return res.status(400).json({
             error: true,
-            message: "Nao foi possivel identificar compra"
+            message: "Nao foi possivel identificar compra."
         });
     }
     await compra.destroy({
         where:{id: req.params.id}
     }).then(compra=>{
         return res.json({
-            message: "Compra excluida"
+            message: "Compra excluida!"
         });
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro Compra"
+            message: "Problemas com registro compra."
         });
     });
 });
 
 
-
+//itemCompra
 app.post('/compra/:id/itemcompra', async(req,res)=>{   
     const itemcompra = {
         ProdutoId: req.body.ProdutoId,
@@ -339,20 +339,20 @@ app.post('/compra/:id/itemcompra', async(req,res)=>{
     if(!await produto.findByPk(req.body.ProdutoId)){
         return res.status(400).json({
             error: true,
-            message: "Produto não identificado"
+            message: "Produto não identificado."
         });
     };
     await itemcompra.create(
         itemcompra
     ).then(item=>{
         return res.json({
-            message: "Item adicionado com sucesso",
+            message: "Item adicionado com sucesso!",
             item
         });
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro item compra"
+            message: "Problemas com registro item compra."
         });
     });
 });
@@ -366,12 +366,10 @@ app.get('/listaritem', async(req,res)=>{
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro item compra"
+            message: "Problemas com registro item compra."
         });
     });
 });
-
-
 
 
 
@@ -379,7 +377,7 @@ app.get('/excluiritemcompra/:id', async(req,res)=>{
     if(!await compra.findByPk(req.params.id)){         
         return res.status(400).json({
             error: true,
-            message:'Compra não encontrada'
+            message:'Compra não localizada.'
         });     
     };
     await itemcompra.destroy({
@@ -392,18 +390,18 @@ app.get('/excluiritemcompra/:id', async(req,res)=>{
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: 'Problemas com registro item compra'
+            message: 'Problemas com registro item compra.'
         });
     });
 });
 
 
-
+//produto
 app.post('/inserirproduto', async(req, res)=>{
     await produto.create(
         req.body
     );
-    res.send("Produto inserido com sucesso")
+    res.send("Produto inserido com sucesso!")
 });
 
 
@@ -412,20 +410,20 @@ app.put('/atualizarproduto/:id', async(req,res)=>{
     if(!await produto.findByPk(req.params.id)){
         return res.status(400).json({
             error: true,
-            message: "Nao foi possivel identificar produto"
+            message: "Nao foi possivel identificar produto."
         });
     };
     await produto.update(req.body,{
         where: {id: req.params.id}
     }).then(produto=>{
         return res.json({
-            message: "Produto atualizada com sucesso",
+            message: "Produto atualizada com sucesso.",
             produto
         });
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro produto"
+            message: "Problemas com registro produto."
         });
     });
 });
@@ -440,7 +438,7 @@ app.get('/listarproduto', async(req,res)=>{
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro produto"
+            message: "Problemas com registro produto."
         });
     });
 });
@@ -451,19 +449,19 @@ app.get('/excluirproduto/:id', async(req,res)=>{
     if(!await compra.findByPk(req.params.id)){          
         return res.status(400).json({
             error: true,
-            message:"Compra não identificada"
+            message:"Compra não identificada."
         });    
     };
     await produto.destroy({
         where:{id: req.params.id}
     }).then(produto=>{
         return res.json({
-            message: "Produto excluido"
+            message: "Produto excluido."
         });
     }).catch(erro=>{
         return res.status(400).json({
             error: true,
-            message: "Problemas com registro produto"
+            message: "Problemas com registro produto."
         });
     });
 });
